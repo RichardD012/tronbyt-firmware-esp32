@@ -61,7 +61,7 @@ idf.py flash
 
 #### 8MHz Pixel Clock (HUB75 I2S Divider Fix)
 
-Some Tidbyt Gen1/Gen2 panels show red pixel artifacts because the bundled ESP32-HUB75-MatrixPanel-DMA library runs the panel at 10MHz instead of the requested 8MHz (see [mrcodetastic/ESP32-HUB75-MatrixPanel-DMA#816](https://github.com/mrcodetastic/ESP32-HUB75-MatrixPanel-DMA/issues/816)). The build patches the library so the `clock_8mhz` setting (see Advanced Settings) can switch these panels to a true 8MHz. It's off by default and applies on reboot. If the library has changed and the patch doesn't match, the build skips it with a warning and `clock_8mhz` does nothing.
+Some Tidbyt Gen1/Gen2 panels show red pixel artifacts at the default 10MHz pixel clock (see [mrcodetastic/ESP32-HUB75-MatrixPanel-DMA#816](https://github.com/mrcodetastic/ESP32-HUB75-MatrixPanel-DMA/issues/816)). The `clock_8mhz` setting (see Advanced Settings) runs these panels at 8MHz instead. It's off by default and applies on reboot.
 
 To build with `clock_8mhz` on by default:
 

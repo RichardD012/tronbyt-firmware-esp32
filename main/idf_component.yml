@@ -7,7 +7,7 @@ dependencies:
     path: components/esp_websocket_client
     version: 730838fac89064b4460be0ece1f799978afc50df
   esp32-hub75-matrixpanel-dma:
-    git: https://github.com/mrcodetastic/ESP32-HUB75-MatrixPanel-DMA.git
-    version: "3.0.14"
+    git: https://github.com/RichardD012/ESP32-HUB75-MatrixPanel-DMA.git
+    version: a308701a802aab0ffc834f7c5489bad0e256e728
   libwebp:
     git: https://github.com/tronbyt/libwebp.git

@@ -25,16 +25,3 @@ endif()
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(firmware)
-
-# Add the runtime clock_8mhz switch to the ESP32-HUB75-MatrixPanel-DMA I2S
-# divider (see tools/patch_i2s_divider.py). Never fails the build: if the
-# library isn't what the patch expects it is left untouched and the display
-# runs the stock divider.
-execute_process(
-    COMMAND ${_idf_python} ${CMAKE_CURRENT_SOURCE_DIR}/tools/patch_i2s_divider.py --apply
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    RESULT_VARIABLE _patch_i2s_result
-)
-if(NOT _patch_i2s_result EQUAL 0)
-    message(WARNING "HUB75 I2S divider patch not applied (${_patch_i2s_result}); clock_8mhz will have no effect. See output above.")
-endif()

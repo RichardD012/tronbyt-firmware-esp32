@@ -4,10 +4,6 @@
 
 #include "font5x7.h"
 #include "nvs_settings.h"
-
-// Read by the patched HUB75 I2S divider (tools/patch_i2s_divider.py) when
-// begin() sets the clock. Has no effect if the build skipped that patch.
-bool hub75_i2s_clock_8mhz = false;
 #ifdef CONFIG_ESP_WS_CLIENT_TASK_STACK_IN_EXT_RAM
 #include <freertos/FreeRTOS.h>
 #include <freertos/timers.h>
@@ -227,13 +223,9 @@ int display_initialize(void) {
 #endif
   }
 
-  // True 8MHz pixel clock instead of the library's 10MHz; must be set before
-  // begin().
-  hub75_i2s_clock_8mhz = nvs_get_clock_8mhz();
-
   ESP_LOGI(TAG, "Initializing display with swap_colors=%s clock_8mhz=%s",
            swap_colors ? "true" : "false",
-           hub75_i2s_clock_8mhz ? "true" : "false");
+           nvs_get_clock_8mhz() ? "true" : "false");
 
   // Initialize the panel.
   HUB75_I2S_CFG::i2s_pins pins = {pin_R1,  pin_G1, pin_BL1, pin_R2, pin_G2,
@@ -253,7 +245,7 @@ int display_initialize(void) {
                          HUB75_I2S_CFG::FM6126A,  // driver chip
                          HUB75_I2S_CFG::TYPE138,  // line driver
                          true,                    // double-buffering
-                         HUB75_I2S_CFG::HZ_10M,   // clock speed
+                         nvs_get_clock_8mhz() ? HUB75_I2S_CFG::HZ_8M : HUB75_I2S_CFG::HZ_10M,   // clock speed
                          1,                       // latch blanking
                          invert_clock_phase       // invert clock phase
   );
